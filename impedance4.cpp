@@ -1,6 +1,6 @@
 // impedance4.cpp : Defines the entry point for the console application.
 // program to print the impedance values of a gUSBamp to stdout
-
+// 09/22/2019 steve i tried to reset to normal mode before I close
 #include "stdafx.h"
 #include <windows.h>
 #include "gUSBamp.h"
@@ -13,11 +13,11 @@ bool fexists(const char *filename)
 {
   ifstream ifile(filename);
   cout << "looking for " << filename;
-  if(ifile != NULL) {
+  if(ifile) {
 	  cout << "found it\n";
   }
-   return (ifile != NULL);
-//  return (bool) ifile;
+ //  return (ifile);
+ return (bool) ifile;
 }
 
 int main(int argc, char* argv[])
@@ -59,6 +59,7 @@ if(myfile.is_open()) { // write them out to a file
   }
   GT_Stop(hdev);
   GT_ResetTransfer(hdev);
+  GT_SetMode(hdev, M_NORMAL);
   GT_CloseDevice(&hdev);
 }else { 
 	cout << "Unable to open " << filename;
